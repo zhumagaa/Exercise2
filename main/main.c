@@ -3,9 +3,10 @@
 
 /*
 Ayanat Zhu, Jan 17 updates -- Github Branch testing
-This code turns LED on every other time the button is pressed.
+This code turns LED on every other time the button is wasPressed.
 
-Added new changes
+Ver 2 new changes:
+Renamed variables for better understanding
 */
 
 // A function to specify delays in milliseconds
@@ -18,10 +19,10 @@ void delay_ms(int t) {
 #define LOOP_DELAY_MS 25
 
 
-bool bstate = false;   // Button state (true = pressed, false = not pressed)
-bool lstate = false;   //LED state (false = off, true = on)
-bool blink = false;   // blink mode (off = don't blink, on = blink)
-bool pressed;          // Flag to indicate a button press event
+bool buttonState = false;   // Button state (true = wasPressed, false = not wasPressed)
+bool ledState = false;   //LED state (false = off, true = on)
+bool blinkLights = false;   // blinkLights mode (off = don't blinkLights, on = blinkLights)
+bool wasPressed;          // Flag to indicate a button press event
 
 
 void app_main(void)
@@ -35,30 +36,30 @@ void app_main(void)
   gpio_pullup_en(BUTTON);
  
   while (1) {                                 // Loop forever
-    pressed = gpio_get_level(BUTTON) == 0;     // Input active low button
+    wasPressed = gpio_get_level(BUTTON) == 0;     // Input active low button
    
-    if (!bstate && pressed) {                  // Released button, is now pressed
-      bstate = true;                           // Remember button is pressed  
+    if (!buttonState && wasPressed) {                  // Released button, is now wasPressed
+      buttonState = true;                           // Remember button is wasPressed  
     }
    
-    if (bstate && !pressed) {                  // Pressed button, is now released
-      blink = !blink;                        // Toggle LED state  
-      bstate = false;                          // Remember button is released
+    if (buttonState && !wasPressed) {                  // Pressed button, is now released
+      blinkLights = !blinkLights;                        // Toggle LED state  
+      buttonState = false;                          // Remember button is released
     }
    
-    if (blink) {                            //if blink mode is set to on
+    if (blinkLights) {                            //if blink mode is set to on
       //blink
-      if (!lstate) {                         //if led was off
+      if (!ledState) {                         //if led was off
         gpio_set_level(LED_GPIO, 1);        //turn LED on
-        lstate = !lstate;                  // indicate that LED was turned on
+        ledState = !ledState;                  // indicate that LED was turned on
         delay_ms(125);
       } else {                              //if led was on
         gpio_set_level(LED_GPIO, 0);        //turn LED off
-        lstate = !lstate;                  // indicate that LED was turned off
+        ledState = !ledState;                  // indicate that LED was turned off
         delay_ms(125);
       }
     } else {                                //if blink mode is set to off
-      gpio_set_level(LED_GPIO, blink);       // LED turns off
+      gpio_set_level(LED_GPIO, blinkLights);       // LED turns off
     }
     delay_ms(LOOP_DELAY_MS);
   }
