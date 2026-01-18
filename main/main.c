@@ -1,6 +1,11 @@
 #include "driver/gpio.h"
 #include "freertos/FreeRTOS.h"
 
+/*
+Ayanat Zhu, Jan 17 updates -- Github Branch testing
+This code turns LED on every other time the button is pressed.
+
+*/
 
 // A function to specify delays in milliseconds
 void delay_ms(int t) {
@@ -45,11 +50,11 @@ void app_main(void)
       if (!lstate) {                         //if led was off
         gpio_set_level(LED_GPIO, 1);        //turn LED on
         lstate = !lstate;                  // indicate that LED was turned on
-        delay_ms(250);
+        delay_ms(125);
       } else {                              //if led was on
         gpio_set_level(LED_GPIO, 0);        //turn LED off
         lstate = !lstate;                  // indicate that LED was turned off
-        delay_ms(250);
+        delay_ms(125);
       }
     } else {                                //if blink mode is set to off
       gpio_set_level(LED_GPIO, blink);       // LED turns off
