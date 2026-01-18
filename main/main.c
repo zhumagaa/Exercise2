@@ -5,6 +5,7 @@
 Ayanat Zhu, Jan 17 updates -- Github Branch testing
 This code turns LED on every other time the button is pressed.
 
+Added new changes
 */
 
 // A function to specify delays in milliseconds
